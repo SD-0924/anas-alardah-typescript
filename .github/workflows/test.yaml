@@ -26,20 +26,20 @@ jobs:
           node-version: ${{ matrix.node-version }}
       
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm install --include=optional sharp
+          npm install  # Or you can use npm ci if your lock file is up to date
       
       - name: Create images directory
         run: mkdir -p src/images
       
       - name: Run Unit Tests
-        env:
-          NODE_ENV: test
         run: npm test
       
       - name: Upload coverage reports
-        if: success()
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report-node-${{ matrix.node-version }}
           path: coverage/
           retention-days: 30
+        if: always()
