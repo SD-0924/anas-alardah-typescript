@@ -14,8 +14,8 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [18.x, 20.x]  # Updated Node.js versions
-    
+        node-version: [18.x, 20.x]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -26,18 +26,20 @@ jobs:
           node-version: ${{ matrix.node-version }}
       
       - name: Install dependencies
-        run: npm install  # Changed from npm ci to npm install
+        run: npm ci
       
       - name: Create images directory
         run: mkdir -p src/images
       
       - name: Run Unit Tests
+        env:
+          NODE_ENV: test
         run: npm test
       
       - name: Upload coverage reports
+        if: success()
         uses: actions/upload-artifact@v3
         with:
           name: coverage-report-node-${{ matrix.node-version }}
           path: coverage/
           retention-days: 30
-        if: always()
