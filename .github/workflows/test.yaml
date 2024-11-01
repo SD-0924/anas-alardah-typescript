@@ -14,7 +14,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [18.x, 20.x]  # Updated Node.js versions
     
     steps:
       - name: Checkout code
@@ -24,10 +24,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
       
       - name: Install dependencies
-        run: npm ci
+        run: npm install  # Changed from npm ci to npm install
       
       - name: Create images directory
         run: mkdir -p src/images
