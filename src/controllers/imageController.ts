@@ -227,7 +227,7 @@ const cropImage = async (req: Request, res: Response): Promise<Response> => {
 const downloadImage = (req: Request, res: Response): void => {
     const imageName: string = req.params.name;
     const imagePath: string = path.resolve(`./src/images/${imageName}`);
-    res.download(imagePath, imageName, (err) => {
+    res.download(imagePath, imageName, (err: NodeJS.ErrnoException) => {
         if (err) {
             if (err.code === 'ENOENT') {
                 console.log('Image not found:', err);
@@ -338,7 +338,7 @@ const waterMarkImage = async (req: Request, res: Response) => {
 
     // Get watermark text and options
     const rawWatermarkText: string = req.query.watermark || req.body.watermark || 'Watermark';
-    const watermarkStyle: string = req.query.style || 'diagonal'; // Options: diagonal, grid, scattered
+    const watermarkStyle: any = req.query.style || 'diagonal'; // Options: diagonal, grid, scattered
 
     try {
         // Get input image metadata
