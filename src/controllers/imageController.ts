@@ -91,7 +91,7 @@ const uploadImage = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'No file uploaded' });
         }
 
-        res.status(200).json({ 
+        res.status(201).json({ 
             message: 'Image uploaded successfully',
             originalFilename: req.file.originalname,
             filename: req.file.filename,
@@ -126,7 +126,7 @@ const resizeImage = async (req: Request, res: Response): Promise<Response> => {
     }
 
 
-    // Check if at least one dimension is specified
+    // Check if at least one dimensions is specified
     if (!width && !height) {
         // delete the uploaded file
         await deleteFileFromServer(req.file.path);
@@ -148,7 +148,7 @@ const resizeImage = async (req: Request, res: Response): Promise<Response> => {
 
         console.log('Image resized successfully to:', newFilePath);
         await deleteFileFromServer(req.file.path);
-        return res.status(200).json({ message: 'Image resized successfully!', path: newFilePath });
+        return res.status(201).json({ message: 'Image resized successfully!', path: newFilePath });
     } catch (error) {
         console.error('Error resizing image:', error);
         return res.status(500).send('Error processing image.');
@@ -200,7 +200,7 @@ const cropImage = async (req: Request, res: Response): Promise<Response> => {
 
         console.log('Image cropped successfully to:', newFilePath);
         await deleteFileFromServer(req.file.path);
-        res.send({ message: 'Image cropped successfully!', path: newFilePath });
+        res.status(201).json({ message: 'Image cropped successfully!', path: newFilePath });
     } catch (error) {
         if (error.message.includes('extract_area: bad extract area')) {
             console.error('Error cropping image:', error);
@@ -299,7 +299,7 @@ const filterImage = async (req: Request, res: Response): Promise<Response> => {
         await deleteFileFromServer(req.file.path);
 
         console.log('Image filtered successfully:', outputPath);
-        res.json({
+        res.status(201).json({
             message: 'Image filtered successfully!',
             path: outputPath,
             filter: filter
@@ -445,7 +445,7 @@ const waterMarkImage = async (req: Request, res: Response) => {
 
         console.log('Image watermarked successfully to:', outputPath);
         await deleteFileFromServer(req.file.path);
-        res.json({ 
+        res.status(201).json({ 
             message: 'Image watermarked successfully!', 
             path: outputPath,
             filename: outputFilename,

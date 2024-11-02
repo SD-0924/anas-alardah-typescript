@@ -16,7 +16,7 @@ describe('Image Controller', () => {
             .post('/uploadImage')
             .attach('image', path.join(__dirname, 'example.jpg')); // Ensure correct path
     
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         //delete image
         fs.unlinkSync(response.body.path);
     });
@@ -27,7 +27,7 @@ describe('Image Controller', () => {
             .post('/resizeImage?width=100&height=100')
             .attach('image', path.join(__dirname, 'example.jpg')); // Ensure correct path
     
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         //delete image
         fs.unlinkSync(response.body.path);
     });
@@ -38,7 +38,7 @@ describe('Image Controller', () => {
             .post('/cropImage?cropX=10&cropY=10&cropWidth=100&cropHeight=100')
             .attach('image', path.join(__dirname, 'example.jpg')); // Ensure correct path
     
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         //delete image
         fs.unlinkSync(response.body.path);
     });
@@ -57,7 +57,7 @@ describe('Image Controller', () => {
             .post('/filterImage?filter=grayscale')
             .attach('image', path.join(__dirname, 'example.jpg')); // Ensure correct path
     
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         //delete image
         fs.unlinkSync(response.body.path);
     });
@@ -68,7 +68,7 @@ describe('Image Controller', () => {
             .post('/watermarkImage?watermark=Watermark')
             .attach('image', path.join(__dirname, 'example.jpg')); // Ensure correct path
     
-        expect(response.status).toBe(200);
+        expect(response.status).toBe(201);
         //delete image
         fs.unlinkSync(response.body.path);
     });
